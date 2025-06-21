@@ -422,6 +422,7 @@
     </div>
 
     <script>
+        document.addEventListener("DOMContentLoaded", () => {
         let currentPage = 0;
         const pages = document.querySelectorAll('.page');
         let touchStartX = 0;
@@ -575,7 +576,8 @@
             } else if (e.key === 'ArrowLeft') {
                 prevPage();
             }
-        }); 
+        })
+     }):
     </script>
 </body>
 </html>
