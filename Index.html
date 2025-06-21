@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy 18th Birthday Ghania! 🎉</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .page {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .page.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .page.prev {
+            transform: translateX(-100%);
+        }
+
+        /* Landing Page Styles */
+        #landing {
+            background: linear-gradient(45deg, #ff6b6b, #feca57, #48dbfb, #ff9ff3);
+            background-size: 400% 400%;
+            animation: gradientShift 4s ease infinite;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .landing-title {
+            font-size: clamp(2rem, 8vw, 4rem);
+            font-weight: bold;
+            margin-bottom: 20px;
+            animation: titlePulse 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes titlePulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.05); text-shadow: 0 0 20px rgba(255,255,255,0.8); }
+        }
+
+        .landing-subtitle {
+            font-size: clamp(1rem, 4vw, 1.5rem);
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        /* Cake Page Styles */
+        #cake-page {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            color: #8b4513;
+        }
+
+        .cake-container {
+            position: relative;
+            cursor: pointer;
+            transform-style: preserve-3d;
+            transition: transform 0.3s ease;
+        }
+
+        .cake-container:hover {
+            transform: rotateY(5deg) rotateX(5deg);
+        }
+
+        .cake {
+            width: 300px;
+            height: 200px;
+            background: linear-gradient(145deg, #8B4513, #A0522D);
+            border-radius: 20px 20px 50px 50px;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            animation: cakeFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes cakeFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .cake::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 10px;
+            right: 10px;
+            height: 40px;
+            background: linear-gradient(145deg, #FFB6C1, #FF69B4);
+            border-radius: 20px;
+            box-shadow: inset 0 2px 10px rgba(255,255,255,0.3);
+        }
+
+        .candle {
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 30px;
+            background: linear-gradient(to bottom, #FFD700, #FFA500);
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .flame {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 15px;
+            background: radial-gradient(circle, #FFA500, #FF4500);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            animation: flicker 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes flicker {
+            0% { transform: translateX(-50%) scale(1) rotate(-2deg); }
+            100% { transform: translateX(-50%) scale(1.1) rotate(2deg); }
+        }
+
+        .cake-cut {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 0;
+            height: 0;
+            background: linear-gradient(to right, #654321, #8B4513);
+            transition: all 0.8s ease;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .cake.cutting .cake-cut {
+            width: 280px;
+            height: 5px;
+        }
+
+        /* Button Styles */
+        .next-btn {
+            background: linear-gradient(45deg, #ff6b6b, #feca57);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 30px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            font-weight: bold;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .next-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .next-btn:hover::before {
+            left: 100%;
+        }
+
+        .next-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+        }
+
+        /* Confetti Animation */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #ff6b6b;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        .confetti:nth-child(odd) { background: #feca57; }
+        .confetti:nth-child(3n) { background: #48dbfb; }
+        .confetti:nth-child(4n) { background: #ff9ff3; }
+        .confetti:nth-child(5n) { background: #1dd1a1; }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        /* Page Specific Styles */
+        .page h1 {
+            font-size: clamp(2rem, 6vw, 3rem);
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .page p {
+            font-size: clamp(1rem, 4vw, 1.3rem);
+            line-height: 1.6;
+            max-width: 600px;
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Individual Page Backgrounds */
+        #wish-page { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+        #fact-page { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; }
+        #meme-page { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; }
+        #compliment-page { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); color: #2c3e50; }
+        #final-page { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); color: white; }
+
+        .meme-img {
+            max-width: 300px;
+            border-radius: 20px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+            margin: 20px 0;
+            animation: bounceIn 1s ease;
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.05); }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            color: #ff6b6b;
+            font-size: 2rem;
+            animation: heartFloat 3s ease-in-out infinite;
+        }
+
+        @keyframes heartFloat {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+
+        /* Mobile Optimizations */
+        @media (max-width: 768px) {
+            .cake {
+                width: 250px;
+                height: 160px;
+            }
+            
+            .next-btn {
+                padding: 12px 25px;
+                font-size: 1rem;
+            }
+            
+            .page {
+                padding: 15px;
+            }
+        }
+
+        /* Swipe indicator */
+        .swipe-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Landing Page -->
+    <div class="page active" id="landing">
+        <div class="landing-title">🎉 Happy 18th Birthday Ghania! 🎉</div>
+        <div class="landing-subtitle">Get ready for 7 amazing surprises!</div>
+        <button class="next-btn" onclick="nextPage()">Start the Magic ✨</button>
+        <div class="swipe-indicator">Swipe or tap to continue →</div>
+    </div>
+
+    <!-- Page 1: Sweet Wish -->
+    <div class="page" id="wish-page">
+        <h1>🌸 A Sweet Wish 🌸</h1>
+        <p>Wishing the purest soul the happiest 18th birthday! You deserve all the smiles, joy, and magical moments in the world today. May this new chapter bring you endless adventures and beautiful memories! 💖</p>
+        <button class="next-btn" onclick="nextPage()">Next Surprise 🎈</button>
+    </div>
+
+    <!-- Page 2: Fun Fact -->
+    <div class="page" id="fact-page">
+        <h1>📖 Fun Birthday Fact 📖</h1>
+        <p>Did you know? People who turn 18 today are scientifically proven to be extra charming, incredibly smart, and absolutely amazing! No wonder you're such a fantastic person! The universe definitely knew what it was doing when you were born! 😏✨</p>
+        <button class="next-btn" onclick="nextPage()">Show me more 🎉</button>
+    </div>
+
+    <!-- Page 3: Virtual Cake -->
+    <div class="page" id="cake-page">
+        <h1>🎂 Your Special Cake 🎂</h1>
+        <p>Swipe across the cake to cut it and make a wish!</p>
+        <div class="cake-container" id="cakeContainer">
+            <div class="cake" id="cake">
+                <div class="candle">
+                    <div class="flame"></div>
+                </div>
+                <div class="cake-cut"></div>
+            </div>
+        </div>
+        <p style="margin-top: 20px; font-size: 1rem;">If I could, I'd send you a real one. But for now — make a wish! 🕯️💨</p>
+        <button class="next-btn" onclick="nextPage()">Wish made! Let's go 🎁</button>
+    </div>
+
+    <!-- Page 4: Meme -->
+    <div class="page" id="meme-page">
+        <h1>😂 Meme Time! 😂</h1>
+        <p>A little something that reminds me of your amazing personality!</p>
+        <img src="https://i.imgflip.com/4/1g8my4.jpg" alt="Birthday Meme" class="meme-img">
+        <p>When someone asks how awesome you are on your birthday! 🎉</p>
+        <button class="next-btn" onclick="nextPage()">LOL, next gift 🎁</button>
+    </div>
+
+    <!-- Page 5: Compliments -->
+    <div class="page" id="compliment-page">
+        <div class="hearts" id="heartsContainer"></div>
+        <h1>💫 You're Amazing! 💫</h1>
+        <p>You're smart, funny, incredibly talented, and make everyone around you smile! Your 18th birthday marks the beginning of an incredible journey, and I know you're going to achieve amazing things! 🌟</p>
+        <button class="next-btn" onclick="nextPage()">Final Surprise 💌</button>
+    </div>
+
+    <!-- Page 6: Final Message -->
+    <div class="page" id="final-page">
+        <h1>💗 From the Heart 💗</h1>
+        <p>As you step into adulthood, remember that you have the power to make your dreams come true. Stay curious, stay kind, and keep being the wonderful person you are. Happy 18th Birthday, Ghania! Here's to all the adventures ahead! 🎊</p>
+        <button class="next-btn" onclick="restartSurprises()">Experience Again 🔁</button>
+    </div>
+
+    <script>
+        let currentPage = 0;
+        const pages = document.querySelectorAll('.page');
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        // Touch/Swipe handlers
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                nextPage(); // Swipe left = next page
+            }
+            if (touchEndX > touchStartX + 50) {
+                prevPage(); // Swipe right = previous page
+            }
+        }
+
+        // Cake cutting interaction
+        let cakeInteractionStarted = false;
+        const cakeContainer = document.getElementById('cakeContainer');
+        
+        cakeContainer.addEventListener('touchstart', (e) => {
+            if (currentPage === 3) {
+                cakeInteractionStarted = true;
+                e.preventDefault();
+            }
+        });
+
+        cakeContainer.addEventListener('touchmove', (e) => {
+            if (currentPage === 3 && cakeInteractionStarted) {
+                const cake = document.getElementById('cake');
+                cake.classList.add('cutting');
+                createConfetti();
+                e.preventDefault();
+            }
+        });
+
+        cakeContainer.addEventListener('touchend', (e) => {
+            if (currentPage === 3 && cakeInteractionStarted) {
+                setTimeout(() => {
+                    const cake = document.getElementById('cake');
+                    cake.classList.remove('cutting');
+                }, 1000);
+                cakeInteractionStarted = false;
+            }
+        });
+
+        // Mouse events for desktop
+        cakeContainer.addEventListener('mousedown', (e) => {
+            if (currentPage === 3) {
+                cakeInteractionStarted = true;
+            }
+        });
+
+        cakeContainer.addEventListener('mousemove', (e) => {
+            if (currentPage === 3 && cakeInteractionStarted) {
+                const cake = document.getElementById('cake');
+                cake.classList.add('cutting');
+                createConfetti();
+            }
+        });
+
+        cakeContainer.addEventListener('mouseup', (e) => {
+            if (currentPage === 3 && cakeInteractionStarted) {
+                setTimeout(() => {
+                    const cake = document.getElementById('cake');
+                    cake.classList.remove('cutting');
+                }, 1000);
+                cakeInteractionStarted = false;
+            }
+        });
+
+        function nextPage() {
+            if (currentPage < pages.length - 1) {
+                pages[currentPage].classList.remove('active');
+                pages[currentPage].classList.add('prev');
+                currentPage++;
+                pages[currentPage].classList.add('active');
+                
+                // Special animations for specific pages
+                if (currentPage === 4) { // Compliments page
+                    createFloatingHearts();
+                }
+                
+                // Reset previous page classes after animation
+                setTimeout(() => {
+                    pages.forEach((page, index) => {
+                        if (index < currentPage) {
+                            page.classList.remove('prev');
+                        }
+                    });
+                }, 800);
+            }
+        }
+
+        function prevPage() {
+            if (currentPage > 0) {
+                pages[currentPage].classList.remove('active');
+                currentPage--;
+                pages[currentPage].classList.remove('prev');
+                pages[currentPage].classList.add('active');
+            }
+        }
+
+        function restartSurprises() {
+            pages[currentPage].classList.remove('active');
+            currentPage = 0;
+            pages[0].classList.add('active');
+            
+            // Reset all page classes
+            pages.forEach(page => {
+                page.classList.remove('prev');
+            });
+        }
+
+        function createConfetti() {
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.classList.add('confetti');
+                    confetti.style.left = Math.random() * 100 + 'vw';
+                    confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                    confetti.style.animation = 'confetti-fall ' + confetti.style.animationDuration + ' linear forwards';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => {
+                        confetti.remove();
+                    }, 5000);
+                }, i * 50);
+            }
+        }
+
+        function createFloatingHearts() {
+            const heartsContainer = document.getElementById('heartsContainer');
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const heart = document.createElement('div');
+                    heart.classList.add('heart');
+                    heart.innerHTML = '💖';
+                    heart.style.left = Math.random() * 100 + '%';
+                    heart.style.animationDelay = Math.random() * 2 + 's';
+                    heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+                    heartsContainer.appendChild(heart);
+                    
+                    setTimeout(() => {
+                        heart.remove();
+                    }, 5000);
+                }, i * 200);
+            }
+        }
+
+        // Initial confetti burst
+        setTimeout(() => {
+            createConfetti();
+        }, 1000);
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                nextPage();
+            } else if (e.key === 'ArrowLeft') {
+                prevPage();
+            }
+        });
+    </script>
+</body>
+</html>
