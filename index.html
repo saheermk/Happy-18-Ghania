@@ -328,6 +328,28 @@
             animation: pulse 2s ease-in-out infinite;
         }
 
+        /* Profile Picture Styles */
+        .profile-pic {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid rgba(255,255,255,0.8);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3), 0 0 0 10px rgba(255,255,255,0.1);
+            margin: 20px 0;
+            animation: profileFloat 3s ease-in-out infinite;
+            transition: transform 0.3s ease;
+        }
+
+        .profile-pic:hover {
+            transform: scale(1.05) rotate(5deg);
+        }
+
+        @keyframes profileFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
         @keyframes pulse {
             0%, 100% { opacity: 0.7; }
             50% { opacity: 1; }
@@ -340,7 +362,7 @@
         <div class="landing-title">🎉 Happy 18th Birthday Ghania! 🎉</div>
         <div class="landing-subtitle">Get ready for 7 amazing surprises!</div>
         <button class="next-btn" onclick="nextPage()">Start the Magic ✨</button>
-        <div class="swipe-indicator">Swipe or tap to continue →</div>
+        <div class="swipe-indicator">Tap the button to continue →</div>
     </div>
 
     <!-- Page 1: Sweet Wish -->
@@ -385,6 +407,7 @@
     <!-- Page 5: Compliments -->
     <div class="page" id="compliment-page">
         <div class="hearts" id="heartsContainer"></div>
+        <img src="ghan1.png" alt="Beautiful Ghania" class="profile-pic-small">
         <h1>💫 You're Amazing! 💫</h1>
         <p>You're smart, funny, incredibly talented, and make everyone around you smile! Your 18th birthday marks the beginning of an incredible journey, and I know you're going to achieve amazing things! 🌟</p>
         <button class="next-btn" onclick="nextPage()">Final Surprise 💌</button>
@@ -403,24 +426,7 @@
         let touchStartX = 0;
         let touchEndX = 0;
 
-        // Touch/Swipe handlers
-        document.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-        });
-
-        document.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        });
-
-        function handleSwipe() {
-            if (touchEndX < touchStartX - 50) {
-                nextPage(); // Swipe left = next page
-            }
-            if (touchEndX > touchStartX + 50) {
-                prevPage(); // Swipe right = previous page
-            }
-        }
+        // Remove general swipe navigation - only keep cake cutting swipes
 
         // Cake cutting interaction
         let cakeInteractionStarted = false;
